@@ -8,6 +8,9 @@ function App() {
 
   const [tasks, setTasks] = useState<Task[]>([]);
 
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
   useEffect(() => {
     const fetchTask = async () => {
       const response = await api.get('/tasks');
@@ -19,13 +22,37 @@ function App() {
 
 }, []);
 
+const handleCreateTask = async () => {
+  const response = await api.post(
+    '/tasks',
+    {
+      title,
+      description
+    }
+  );
+  setTasks([...tasks, response.data])
+
+  setTitle('');
+  setDescription('');
+  console.log(response.data)
+};
+
+
 console.log(tasks)
 
   return (
     <div>
       <h1>Task Manager</h1>
       <p>Total de tarefas: {tasks.length}</p>
-
+      <label> Titulo:</label>
+      <input type="text" value={title} onChange={(event) => {
+        setTitle(event.target.value);
+      }}/>
+      <label> Descrição:</label>
+      <input type="text" value={description} onChange={(event) => {
+        setDescription(event.target.value);
+      }} />
+      <button onClick={handleCreateTask}>Criar Tarefa</button>
      <TaskList tasks={tasks} />
     </div>
   );
