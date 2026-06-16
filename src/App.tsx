@@ -32,6 +32,14 @@ function App() {
     console.log(response.data);
   };
 
+  const handleDeleteTask = async (id: number) => {
+    await api.delete(`/tasks/${id}`);
+
+    setTasks(
+      tasks.filter(task => task.id !== id)
+    );
+  };
+
   console.log(tasks);
 
   return (
@@ -47,7 +55,10 @@ function App() {
         handleCreateTask={handleCreateTask}
       />
 
-      <TaskList tasks={tasks} />
+      <TaskList
+      tasks={tasks}
+      handleDeleteTask={handleDeleteTask}
+      />
     </div>
   );
 }
