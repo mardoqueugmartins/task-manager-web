@@ -10,6 +10,24 @@ function App() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
+
+  const handleEditTask = (task: Task) => {
+    setEditingTaskId(task.id);
+    setEditTitle(task.title);
+    setEditDescription(task.description);
+  };
+
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+
+  console.log(editingTaskId);
+  
+  console.log({
+    editTitle,
+    editDescription
+  });
+
   useEffect(() => {
     const fetchTask = async () => {
       const response = await api.get("/tasks");
@@ -25,6 +43,7 @@ function App() {
       title,
       description,
     });
+    
     setTasks([...tasks, response.data]);
 
     setTitle("");
@@ -42,6 +61,33 @@ function App() {
 
   console.log(tasks);
 
+  const handleUpdateTask = async () => {
+    console.log("Salvando...");
+   const response = await api.put(`/tasks/${editingTaskId}`, {
+     title: editTitle,
+     description: editDescription,
+   });
+
+   console.log("Response completo:");
+   console.log(response);
+
+   console.log("Response data:");
+   console.log(response.data);
+    
+
+    setTasks(tasks.map(task =>
+      task.id === editingTaskId
+      ? {
+        ...task,
+        title: editTitle,
+        description: editDescription,
+      }
+      : task
+    ));
+
+    setEditingTaskId(null);
+  };
+
   return (
     <div>
       <h1>Task Manager</h1>
@@ -58,6 +104,13 @@ function App() {
       <TaskList
       tasks={tasks}
       handleDeleteTask={handleDeleteTask}
+      handleEditTask={handleEditTask}
+      editingTaskId={editingTaskId}
+      editTitle={editTitle}
+      editDescription={editDescription}
+      setEditTitle={setEditTitle}
+      setEditDescription={setEditDescription}
+      handleUpdateTask={handleUpdateTask}
       />
     </div>
   );
