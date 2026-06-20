@@ -17,9 +17,11 @@ type TaskListProps = {
   setEditDescription: (value: string) => void;
 
   handleUpdateTask: () => void;
+
+  handleCancelEdit: () => void;
 };
 
-const TaskList = ({tasks, handleDeleteTask, handleEditTask, editingTaskId, editTitle, editDescription, setEditTitle, setEditDescription, handleUpdateTask}: TaskListProps) => {
+const TaskList = ({tasks, handleDeleteTask, handleEditTask, editingTaskId, editTitle, editDescription, setEditTitle, setEditDescription, handleUpdateTask, handleCancelEdit}: TaskListProps) => {
   return (
     <div>
       {tasks.map(task => (
@@ -34,6 +36,7 @@ const TaskList = ({tasks, handleDeleteTask, handleEditTask, editingTaskId, editT
         setEditTitle={setEditTitle}
         setEditDescription={setEditDescription}
         handleUpdateTask={handleUpdateTask}
+        handleCancelEdit={handleCancelEdit}
         />
         
       ))}

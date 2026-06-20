@@ -88,6 +88,11 @@ function App() {
     setEditingTaskId(null);
   };
 
+
+  const handleCancelEdit = () => {
+    setEditingTaskId(null);
+  };
+
   return (
     <div>
       <h1>Task Manager</h1>
@@ -111,6 +116,7 @@ function App() {
       setEditTitle={setEditTitle}
       setEditDescription={setEditDescription}
       handleUpdateTask={handleUpdateTask}
+      handleCancelEdit={handleCancelEdit}
       />
     </div>
   );

@@ -16,6 +16,8 @@ type TaskCardProps = {
   setEditDescription: (value: string) => void;
 
   handleUpdateTask: () => void;
+
+  handleCancelEdit: () => void;
 };
 
 const TaskCard = ({
@@ -27,7 +29,8 @@ const TaskCard = ({
   editDescription,
   setEditTitle,
   setEditDescription,
-  handleUpdateTask
+  handleUpdateTask,
+  handleCancelEdit,
 }: TaskCardProps) => {
   console.log(task.id, editingTaskId, editingTaskId === task.id);
   return (
@@ -35,20 +38,21 @@ const TaskCard = ({
       {editingTaskId === task.id ? (
         <div>
           <input
-          type="text"
-          value={editTitle}
-          onChange={(event) => {
-            setEditTitle(event.target.value);
-          }}
+            type="text"
+            value={editTitle}
+            onChange={(event) => {
+              setEditTitle(event.target.value);
+            }}
           />
           <input
-          type="text"
-          value={editDescription}
-          onChange={(event) => {
-            setEditDescription(event.target.value);
-          }}
+            type="text"
+            value={editDescription}
+            onChange={(event) => {
+              setEditDescription(event.target.value);
+            }}
           />
           <button onClick={handleUpdateTask}>Salvar</button>
+          <button onClick={handleCancelEdit}>Cancelar</button>
         </div>
       ) : (
         <>
