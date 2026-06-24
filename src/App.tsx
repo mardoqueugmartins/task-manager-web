@@ -112,11 +112,12 @@ function App() {
     }
   };
 
+  const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
+
   const completedTasks = tasks.filter((task) => task.completed).length;
 
   const pendingTasks = tasks.filter((task) => !task.completed).length;
-
-  const [filter, setFilter] = useState("all");
 
   let filteredTasks = tasks;
 
@@ -128,18 +129,19 @@ function App() {
     filteredTasks = tasks.filter((task) => !task.completed);
   }
 
+  if (search) {
+    filteredTasks = filteredTasks.filter((task) =>
+      task.title.toLowerCase().includes(search.toLowerCase()),
+    );
+  }
+
   return (
     <div>
       <h1>Task Manager</h1>
       <p>Total de tarefas: {tasks.length}</p>
       <p>Concluídas: {completedTasks}</p>
       <p>Pendentes: {pendingTasks}</p>
-      <button onClick={() => setFilter("all")}>Todas</button>
-
-      <button onClick={() => setFilter("completed")}>Concluídas</button>
-
-      <button onClick={() => setFilter("pending")}>Pendentes</button>
-
+    
       <TaskForm
         title={title}
         description={description}
@@ -147,6 +149,19 @@ function App() {
         setDescription={setDescription}
         handleCreateTask={handleCreateTask}
       />
+
+      <input
+      type="text"
+      placeholder="Search tasks..."
+      value={search}
+      onChange={(event) => {
+        setSearch(event.target.value);
+      }}
+      />
+
+      <button onClick={() => setFilter("all")}>Todas</button>
+      <button onClick={() => setFilter("completed")}>Concluídas</button>
+      <button onClick={() => setFilter("pending")}>Pendentes</button>
 
       <TaskList
         tasks={filteredTasks}
