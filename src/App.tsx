@@ -116,12 +116,29 @@ function App() {
 
   const pendingTasks = tasks.filter((task) => !task.completed).length;
 
+  const [filter, setFilter] = useState("all");
+
+  let filteredTasks = tasks;
+
+  if (filter === "completed") {
+    filteredTasks = tasks.filter((task) => task.completed);
+  }
+
+  if (filter === "pending") {
+    filteredTasks = tasks.filter((task) => !task.completed);
+  }
+
   return (
     <div>
       <h1>Task Manager</h1>
       <p>Total de tarefas: {tasks.length}</p>
       <p>Concluídas: {completedTasks}</p>
       <p>Pendentes: {pendingTasks}</p>
+      <button onClick={() => setFilter("all")}>Todas</button>
+
+      <button onClick={() => setFilter("completed")}>Concluídas</button>
+
+      <button onClick={() => setFilter("pending")}>Pendentes</button>
 
       <TaskForm
         title={title}
@@ -132,7 +149,7 @@ function App() {
       />
 
       <TaskList
-        tasks={tasks}
+        tasks={filteredTasks}
         handleDeleteTask={handleDeleteTask}
         handleEditTask={handleEditTask}
         editingTaskId={editingTaskId}
