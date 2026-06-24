@@ -21,13 +21,6 @@ function App() {
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
 
-  console.log(editingTaskId);
-  
-  console.log({
-    editTitle,
-    editDescription
-  });
-
   useEffect(() => {
     const fetchTask = async () => {
       const response = await api.get("/tasks");
@@ -39,64 +32,96 @@ function App() {
   }, []);
 
   const handleCreateTask = async () => {
-    const response = await api.post("/tasks", {
-      title,
-      description,
-    });
-    
-    setTasks([...tasks, response.data]);
+    try {
+      const response = await api.post("/tasks", {
+        title,
+        description,
+        completed: false,
+      });
 
-    setTitle("");
-    setDescription("");
-    console.log(response.data);
+      setTasks([...tasks, response.data]);
+
+      setTitle("");
+      setDescription("");
+    } catch (error) {
+      console.log(error);
+      alert("Erro ao criar tarefa.");
+    }
   };
 
   const handleDeleteTask = async (id: number) => {
-    await api.delete(`/tasks/${id}`);
+    try {
+      await api.delete(`/tasks/${id}`);
 
-    setTasks(
-      tasks.filter(task => task.id !== id)
-    );
+      setTasks(tasks.filter((task) => task.id !== id));
+    } catch (error) {
+      console.log(error);
+      alert("Erro ao excluir tarefa.");
+    }
   };
-
-  console.log(tasks);
 
   const handleUpdateTask = async () => {
-    console.log("Salvando...");
-   const response = await api.put(`/tasks/${editingTaskId}`, {
-     title: editTitle,
-     description: editDescription,
-   });
-
-   console.log("Response completo:");
-   console.log(response);
-
-   console.log("Response data:");
-   console.log(response.data);
-    
-
-    setTasks(tasks.map(task =>
-      task.id === editingTaskId
-      ? {
-        ...task,
+    try {
+      await api.put(`/tasks/${editingTaskId}`, {
         title: editTitle,
         description: editDescription,
-      }
-      : task
-    ));
+      });
 
-    setEditingTaskId(null);
+      setTasks(
+        tasks.map((task) =>
+          task.id === editingTaskId
+            ? {
+                ...task,
+                title: editTitle,
+                description: editDescription,
+              }
+            : task,
+        ),
+      );
+
+      setEditingTaskId(null);
+    } catch (error) {
+      console.log(error);
+      alert("Erro ao atualizar tarefa.");
+    }
   };
-
 
   const handleCancelEdit = () => {
     setEditingTaskId(null);
   };
 
+  const handleToggleTask = async (id: number) => {
+    console.log("Clique detectado para a tarefa:", id);
+    const taskToggle = tasks.find((task) => task.id === id);
+
+    if (!taskToggle) return;
+
+    try {
+      await api.patch(`/tasks/${id}`, {
+        completed: !taskToggle.completed,
+      });
+
+      setTasks(
+        tasks.map((task) =>
+          task.id === id ? { ...task, completed: !task.completed } : task,
+        ),
+      );
+    } catch (error) {
+      console.log(error);
+      alert("Erro ao atualizar o status da tarefa.");
+    }
+  };
+
+  const completedTasks = tasks.filter((task) => task.completed).length;
+
+  const pendingTasks = tasks.filter((task) => !task.completed).length;
+
   return (
     <div>
       <h1>Task Manager</h1>
       <p>Total de tarefas: {tasks.length}</p>
+      <p>Concluídas: {completedTasks}</p>
+      <p>Pendentes: {pendingTasks}</p>
 
       <TaskForm
         title={title}
@@ -107,16 +132,17 @@ function App() {
       />
 
       <TaskList
-      tasks={tasks}
-      handleDeleteTask={handleDeleteTask}
-      handleEditTask={handleEditTask}
-      editingTaskId={editingTaskId}
-      editTitle={editTitle}
-      editDescription={editDescription}
-      setEditTitle={setEditTitle}
-      setEditDescription={setEditDescription}
-      handleUpdateTask={handleUpdateTask}
-      handleCancelEdit={handleCancelEdit}
+        tasks={tasks}
+        handleDeleteTask={handleDeleteTask}
+        handleEditTask={handleEditTask}
+        editingTaskId={editingTaskId}
+        editTitle={editTitle}
+        editDescription={editDescription}
+        setEditTitle={setEditTitle}
+        setEditDescription={setEditDescription}
+        handleUpdateTask={handleUpdateTask}
+        handleCancelEdit={handleCancelEdit}
+        handleToggleTask={handleToggleTask}
       />
     </div>
   );

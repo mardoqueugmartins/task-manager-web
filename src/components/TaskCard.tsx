@@ -18,6 +18,8 @@ type TaskCardProps = {
   handleUpdateTask: () => void;
 
   handleCancelEdit: () => void;
+
+  handleToggleTask: (id: number) => void;
 };
 
 const TaskCard = ({
@@ -31,6 +33,7 @@ const TaskCard = ({
   setEditDescription,
   handleUpdateTask,
   handleCancelEdit,
+  handleToggleTask,
 }: TaskCardProps) => {
   console.log(task.id, editingTaskId, editingTaskId === task.id);
   return (
@@ -56,6 +59,11 @@ const TaskCard = ({
         </div>
       ) : (
         <>
+          <input
+            type="checkbox"
+            checked={task.completed}
+            onChange={() => handleToggleTask(task.id)}
+          />
           <h2>{task.title}</h2>
           <p>{task.description}</p>
         </>
