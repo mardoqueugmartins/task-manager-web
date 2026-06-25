@@ -35,9 +35,8 @@ const TaskCard = ({
   handleCancelEdit,
   handleToggleTask,
 }: TaskCardProps) => {
-  console.log(task.id, editingTaskId, editingTaskId === task.id);
   return (
-    <div>
+    <div className="rounded-lg bg-white p-4 shadow-sm">
       {editingTaskId === task.id ? (
         <div>
           <input
@@ -47,6 +46,7 @@ const TaskCard = ({
               setEditTitle(event.target.value);
             }}
           />
+
           <input
             type="text"
             value={editDescription}
@@ -54,34 +54,52 @@ const TaskCard = ({
               setEditDescription(event.target.value);
             }}
           />
+
           <button onClick={handleUpdateTask}>Salvar</button>
           <button onClick={handleCancelEdit}>Cancelar</button>
         </div>
       ) : (
-        <>
+        <div className="flex items-center gap-2">
           <input
+            className="mt-1 h-4 w-4 cursor-pointer"
             type="checkbox"
             checked={task.completed}
             onChange={() => handleToggleTask(task.id)}
           />
-          <h2>{task.title}</h2>
-          <p>{task.description}</p>
-        </>
+
+          <div>
+            <h2
+              className={
+                task.completed
+                  ? "text-lg font-semibold text-slate-400 line-through"
+                  : "text-lg font-semibold text-slate-900"
+              }
+            >
+              {task.title}
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-600">{task.description}</p>
+          </div>
+        </div>
       )}
-      <button
-        onClick={() => {
-          handleDeleteTask(task.id);
-        }}
-      >
-        Excluir tarefa
-      </button>
-      <button
-        onClick={() => {
-          handleEditTask(task);
-        }}
-      >
-        Editar tarefa
-      </button>
+
+      <div className="mt-4 flex gap-2">
+        <button
+          onClick={() => {
+            handleDeleteTask(task.id);
+          }}
+        >
+          Excluir tarefa
+        </button>
+
+        <button
+          onClick={() => {
+            handleEditTask(task);
+          }}
+        >
+          Editar tarefa
+        </button>
+      </div>
     </div>
   );
 };
