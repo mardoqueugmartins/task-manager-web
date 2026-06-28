@@ -1,16 +1,37 @@
+import type { LucideIcon } from "lucide-react";
+
 type StatCardProps = {
-    title: string;
-    value: number;
-    color: string;
+  title: string;
+  value: number;
+  color: string;
+  bgColor: string;
+  icon: LucideIcon;
 };
 
-const StatCard = ({title, value, color}: StatCardProps) => {
-    return (
-      <div className="rounded-lg bg-white p-4 shadow-sm">
-        <h2 className={`text-2xl font-bold ${color}`}>{value}</h2>
-        <p className="text-slate-500">{title}</p>
+const StatCard = ({
+  title,
+  value,
+  color,
+  bgColor,
+  icon: Icon,
+}: StatCardProps) => {
+  return (
+    <div className="flex min-h-28 items-center gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
+      <div
+        className={`flex h-16 w-16 items-center justify-center rounded-2xl ${bgColor}`}
+      >
+        <Icon className={color} size={30} strokeWidth={2.2} />
       </div>
-    );
+
+      <div>
+        <p className="text-sm font-medium text-slate-500">{title}</p>
+
+        <h2 className={`text-4xl font-bold ${color}`}>{value}</h2>
+
+        <p className="text-sm text-slate-400">tarefas</p>
+      </div>
+    </div>
+  );
 };
 
-export default StatCard
+export default StatCard;
