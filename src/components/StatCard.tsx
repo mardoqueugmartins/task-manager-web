@@ -16,7 +16,7 @@ const StatCard = ({
   icon: Icon,
 }: StatCardProps) => {
   return (
-    <div className="flex min-h-28 items-center gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
+    <div className="flex min-h-28 items-center gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-slate-700 dark:bg-slate-800">
       <div
         className={`flex h-16 w-16 items-center justify-center rounded-2xl ${bgColor}`}
       >
@@ -24,11 +24,13 @@ const StatCard = ({
       </div>
 
       <div>
-        <p className="text-sm font-medium text-slate-500">{title}</p>
+        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+          {title}
+        </p>
 
         <h2 className={`text-4xl font-bold ${color}`}>{value}</h2>
 
-        <p className="text-sm text-slate-400">tarefas</p>
+        <p className="text-sm text-slate-400 dark:text-slate-500">tarefas</p>
       </div>
     </div>
   );

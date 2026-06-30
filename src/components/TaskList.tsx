@@ -54,11 +54,13 @@ const TaskList = ({
 
   return (
     <div className="grid w-full gap-8 xl:grid-cols-2">
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="mb-5 flex items-center justify-between border-b border-orange-100 pb-4">
-          <h2 className="text-lg font-semibold text-slate-900">Pendentes</h2>
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-colors duration-300 dark:border-slate-700 dark:bg-slate-800">
+        <div className="mb-5 flex items-center justify-between border-b border-orange-100 pb-4 dark:border-slate-700">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+            Pendentes
+          </h2>
 
-          <span className="rounded-full bg-orange-100 px-3 py-1 text-sm font-medium text-orange-600">
+          <span className="rounded-full bg-orange-100 px-3 py-1 text-sm font-medium text-orange-600 dark:bg-orange-950/40 dark:text-orange-300">
             {pendingTasks.length}
           </span>
         </div>
@@ -67,17 +69,20 @@ const TaskList = ({
           {pendingTasks.length > 0 ? (
             pendingTasks.map(renderTask)
           ) : (
-            <p className="rounded-xl border border-dashed border-slate-200 p-6 text-center text-sm text-slate-400">
+            <p className="rounded-xl border border-dashed border-slate-200 p-6 text-center text-sm text-slate-400 dark:border-slate-700 dark:text-slate-500">
               Nenhuma tarefa pendente.
             </p>
           )}
         </div>
       </section>
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="mb-5 flex items-center justify-between border-b border-green-100 pb-4">
-          <h2 className="text-lg font-semibold text-slate-900">Concluídas</h2>
 
-          <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-600">
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-colors duration-300 dark:border-slate-700 dark:bg-slate-800">
+        <div className="mb-5 flex items-center justify-between border-b border-green-100 pb-4 dark:border-slate-700">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+            Concluídas
+          </h2>
+
+          <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-600 dark:bg-green-950/40 dark:text-green-300">
             {completedTasks.length}
           </span>
         </div>
@@ -86,7 +91,7 @@ const TaskList = ({
           {completedTasks.length > 0 ? (
             completedTasks.map(renderTask)
           ) : (
-            <p className="rounded-xl border border-dashed border-slate-200 p-6 text-center text-sm text-slate-400">
+            <p className="rounded-xl border border-dashed border-slate-200 p-6 text-center text-sm text-slate-400 dark:border-slate-700 dark:text-slate-500">
               Nenhuma tarefa concluída.
             </p>
           )}
