@@ -15,7 +15,7 @@ const Sidebar = () => {
         </div>
 
         <div>
-          <h1 className="text-lg font-bold text-slate-900 transition-colors dark:text-slate-100">
+          <h1 className="text-lg font-bold text-slate-900 dark:text-slate-100">
             Task Manager
           </h1>
           <p className="text-sm text-slate-400 dark:text-slate-500">
@@ -24,14 +24,13 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Menu */}
       <nav className="flex flex-1 flex-col gap-2">
-        <button className="flex items-center gap-3 rounded-xl bg-blue-50 px-4 py-3 font-medium text-blue-600 transition">
+        <button className="flex items-center gap-3 rounded-xl bg-blue-50 px-4 py-3 font-medium text-blue-600 transition dark:bg-blue-950/40 dark:text-blue-300">
           <LayoutDashboard size={20} />
           <span>Tarefas</span>
         </button>
 
-        <button className="flex items-center gap-3 rounded-xl bg-blue-50 px-4 py-3 font-medium text-blue-600 transition dark:bg-blue-950/40 dark:text-blue-300">
+        <button className="flex items-center gap-3 rounded-xl px-4 py-3 font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100">
           <BarChart3 size={20} />
           <span>Estatísticas</span>
         </button>
@@ -49,7 +48,6 @@ const Sidebar = () => {
           <p className="font-semibold text-slate-900 dark:text-slate-100">
             Mardoqueu
           </p>
-
           <p className="text-sm text-slate-500 dark:text-slate-400">
             Desenvolvedor
           </p>
