@@ -1,11 +1,12 @@
 type TaskFormProps = {
   title: string;
   description: string;
-
+  
   setTitle: (value: string) => void;
   setDescription: (value: string) => void;
-
+  
   handleCreateTask: () => void;
+  isCreatingTask: boolean;
 };
 
 const TaskForm = ({
@@ -14,6 +15,7 @@ const TaskForm = ({
   setTitle,
   setDescription,
   handleCreateTask,
+  isCreatingTask,
 }: TaskFormProps) => {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-300 dark:border-slate-700 dark:bg-slate-800 sm:p-6">
@@ -43,10 +45,11 @@ const TaskForm = ({
         />
 
         <button
-          className="w-full rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 sm:text-base lg:w-auto"
+          className="w-full rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 sm:text-base lg:w-auto"
           onClick={handleCreateTask}
+          disabled={isCreatingTask}
         >
-          + Criar tarefa
+          {isCreatingTask ? "Criando..." : "+ Criar tarefa"}
         </button>
       </div>
     </div>

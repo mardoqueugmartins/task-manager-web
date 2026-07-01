@@ -4,7 +4,7 @@ import { Check, Pencil, Trash2 } from "lucide-react";
 type TaskCardProps = {
   task: Task;
 
-  handleDeleteTask: (id: number) => void;
+  handleDeleteTask: (task: Task) => void;
   handleEditTask: (task: Task) => void;
 
   editingTaskId: number | null;
@@ -18,6 +18,10 @@ type TaskCardProps = {
   handleUpdateTask: () => void;
   handleCancelEdit: () => void;
   handleToggleTask: (id: number) => void;
+
+  updatingTaskId: number | null;
+  deletingTaskId: number | null;
+  togglingTaskId: number | null;
 };
 
 const TaskCard = ({
@@ -32,8 +36,14 @@ const TaskCard = ({
   handleUpdateTask,
   handleCancelEdit,
   handleToggleTask,
+  updatingTaskId,
+  deletingTaskId,
+  togglingTaskId,
 }: TaskCardProps) => {
   const isEditing = editingTaskId === task.id;
+  const isUpdating = updatingTaskId === task.id;
+  const isDeleting = deletingTaskId === task.id;
+  const isToggling = togglingTaskId === task.id;
 
   if (isEditing) {
     return (
@@ -66,10 +76,11 @@ const TaskCard = ({
             </button>
 
             <button
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
               onClick={handleUpdateTask}
+              disabled={isUpdating}
             >
-              Salvar
+              {isUpdating ? "Salvando..." : "Salvar"}
             </button>
           </div>
         </div>
@@ -89,10 +100,11 @@ const TaskCard = ({
         <button
           className={
             task.completed
-              ? "mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-green-500 text-xs text-white sm:h-6 sm:w-6"
-              : "mt-1 h-5 w-5 shrink-0 rounded-lg border border-slate-300 bg-white transition hover:border-blue-500 hover:bg-blue-50 dark:border-slate-600 dark:bg-slate-800 dark:hover:border-blue-400 dark:hover:bg-slate-700 sm:h-6 sm:w-6"
+              ? "mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-green-500 text-xs text-white transition disabled:cursor-not-allowed disabled:opacity-70 sm:h-6 sm:w-6"
+              : "mt-1 h-5 w-5 shrink-0 rounded-lg border border-slate-300 bg-white transition hover:border-blue-500 hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-70 dark:border-slate-600 dark:bg-slate-800 dark:hover:border-blue-400 dark:hover:bg-slate-700 sm:h-6 sm:w-6"
           }
           onClick={() => handleToggleTask(task.id)}
+          disabled={isToggling}
           aria-label="Alterar status da tarefa"
         >
           {task.completed ? <Check size={13} strokeWidth={3} /> : null}
@@ -128,14 +140,15 @@ const TaskCard = ({
         </button>
 
         <button
-          className="flex h-8 w-8 items-center justify-center rounded-lg text-red-500 transition hover:bg-red-50 hover:text-red-600 dark:text-red-400 dark:hover:bg-red-950/40 dark:hover:text-red-300 sm:h-9 sm:w-9"
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-red-500 transition hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-50 dark:text-red-400 dark:hover:bg-red-950/40 dark:hover:text-red-300 sm:h-9 sm:w-9"
           onClick={() => {
-            handleDeleteTask(task.id);
+            handleDeleteTask(task);
           }}
+          disabled={isDeleting}
           aria-label="Excluir tarefa"
           title="Excluir tarefa"
         >
-          <Trash2 size={16} />
+          {isDeleting ? "..." : <Trash2 size={16} />}
         </button>
       </div>
     </article>

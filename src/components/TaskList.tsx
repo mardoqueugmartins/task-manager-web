@@ -5,7 +5,7 @@ type TaskListProps = {
   pendingTasks: Task[];
   completedTasks: Task[];
 
-  handleDeleteTask: (id: number) => void;
+  handleDeleteTask: (task: Task) => void;
   handleEditTask: (task: Task) => void;
 
   editingTaskId: number | null;
@@ -19,6 +19,10 @@ type TaskListProps = {
   handleUpdateTask: () => void;
   handleCancelEdit: () => void;
   handleToggleTask: (id: number) => void;
+
+  updatingTaskId: number | null;
+  deletingTaskId: number | null;
+  togglingTaskId: number | null;
 };
 
 const TaskList = ({
@@ -34,6 +38,9 @@ const TaskList = ({
   handleUpdateTask,
   handleCancelEdit,
   handleToggleTask,
+  updatingTaskId,
+  deletingTaskId,
+  togglingTaskId,
 }: TaskListProps) => {
   const renderTask = (task: Task) => (
     <TaskCard
@@ -49,6 +56,9 @@ const TaskList = ({
       handleUpdateTask={handleUpdateTask}
       handleCancelEdit={handleCancelEdit}
       handleToggleTask={handleToggleTask}
+      updatingTaskId={updatingTaskId}
+      deletingTaskId={deletingTaskId}
+      togglingTaskId={togglingTaskId}
     />
   );
 
